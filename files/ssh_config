@@ -1,0 +1,4 @@
+Host serval
+    Hostname atez.duckdns.org
+    User    vince
+    Port 40

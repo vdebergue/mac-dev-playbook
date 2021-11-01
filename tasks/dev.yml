@@ -1,0 +1,27 @@
+- name: nvm setup
+  blockinfile:
+    path: "~/.zshrc"
+    marker: "# MANAGED BY ANSIBLE -- NVM"
+    block: |
+      export NVM_DIR="$HOME/.nvm"
+      [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+      [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+- file:
+    path: "~/.nvm"
+    state: directory
+
+- command: cs java --jvm 11 -version
+  args:
+    creates: "~/Library/Caches/Coursier/arc/https/github.com/AdoptOpenJDK/openjdk11-binaries"
+
+- blockinfile:
+    path: "~/.zshrc"
+    marker: "# MANAGED BY ANSIBLE -- CS"
+    block: |
+      export JAVA_HOME=$(cs java-home --jvm 11)
+      export PATH="$PATH:$HOME/Library/Application Support/Coursier/bin"
+
+- command: cs install sbt
+  args:
+    creates: "~/Library/Application Support/Coursier/bin/sbt"

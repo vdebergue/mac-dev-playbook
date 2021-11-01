@@ -1,28 +1,45 @@
----
-# Custom Terminal theme.
-- name: Get current Terminal profile.
-  command: defaults read com.apple.terminal 'Default Window Settings'
-  register: terminal_theme
-  changed_when: false
-  check_mode: false
+- name: Download zsh installer
+  get_url: url=https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh dest=/tmp/zsh-installer.sh mode=u+rwx
 
-- name: Ensure custom Terminal profile is added.
-  copy:
-    src: files/terminal/JJG-Term.terminal
-    dest: /tmp/JJG-Term.terminal
-  changed_when: false
-  when: "'JJG-Term' not in terminal_theme.stdout"
+- name: Execute the zsh-installer.sh
+  shell: /tmp/zsh-installer.sh
+  args:
+      creates: "~/.oh-my-zsh"
 
-- name: Ensure custom Terminal profile is added.
-  command: open /tmp/JJG-Term.terminal
-  changed_when: false
-  when: "'JJG-Term' not in terminal_theme.stdout"
+- name: Remove the zsh-installer.sh
+  file: path=/tmp/zsh-installer.sh state=absent
 
-# TODO: This doesn't work in Yosemite. Consider a different solution?
-- name: Ensure custom Terminal profile is set as default.
-  command: "{{ item }}"
-  with_items:
-    - defaults write com.apple.terminal 'Default Window Settings' -string JJG-Term
-    - defaults write com.apple.terminal 'Startup Window Settings' -string JJG-Term
-  changed_when: false
-  when: "'JJG-Term' not in terminal_theme.stdout"
+- copy:
+    src: starship.toml
+    dest: "~/.config/starship.toml"
+
+- lineinfile:
+    path: "~/.zshrc"
+    line: 'eval "$(starship init zsh)"'
+
+- copy:
+    src: iterm2.json
+    dest: "~/Library/Application Support/iTerm2/DynamicProfiles/iterm2.json"
+
+- lineinfile:
+      path: "~/.zshrc"
+      line: alias ls="lsd"
+
+- lineinfile:
+    path: "~/.zshrc"
+    line: alias g="git"
+
+- community.general.git_config:
+    scope: global
+    name: alias.co
+    value: "checkout"
+
+- community.general.git_config:
+    scope: global
+    name: alias.ci
+    value: "commit"
+
+- community.general.git_config:
+    scope: global
+    name: alias.s
+    value: "status -s"

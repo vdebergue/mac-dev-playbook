@@ -7,11 +7,12 @@ configure_osx: true
 
 # Set to 'true' to configure the Dock via dockutil.
 configure_dock: false
-dockitems_remove: []
-# - Launchpad
-# - TV
-# - Podcasts
-# - 'App Store'
+dockitems_remove: 
+- Launchpad
+- TV
+- Podcasts
+- 'App Store'
+
 dockitems_persist: []
 # - name: "Sublime Text"
 #   path: "/Applications/Sublime Text.app/"
@@ -36,51 +37,35 @@ dotfiles_files:
 
 homebrew_installed_packages:
   # - ansible # Installed via Pip.
-  - autoconf
   - bash-completion
-  - doxygen
-  - gettext
-  - gifsicle
   - git
-  - github/gh/gh
-  - go
-  - gpg
-  - httpie
-  - iperf
-  - libevent
-  - sqlite
-  - mcrypt
-  - nmap
-  - node
+  - git-delta
   - nvm
-  - php
   - ssh-copy-id
-  - cowsay
   - readline
   - openssl
   - pv
   - wget
-  - wrk
-  - zsh-history-substring-search
+  - starship
+  - gnupg 
+  - pinentry-mac
+  - coursier/formulas/coursier
+  - lsd
 
 homebrew_taps:
   - homebrew/core
   - homebrew/cask
 
 homebrew_cask_appdir: /Applications
+homebrew_cask_accept_external_apps: true
 homebrew_cask_apps:
-  - chromedriver
-  - docker
-  - dropbox
+  - iterm2
   - firefox
-  - google-chrome
-  - handbrake
-  - licecap
-  - sequel-ace
-  - slack
-  - sublime-text
-  - transmit
-  - vagrant
+  - syncthing
+  - keepassxc
+  - visual-studio-code
+  - docker
+  - intellij-idea-ce
 
 # See `geerlingguy.mas` role documentation for usage instructions.
 mas_installed_apps: []
@@ -129,3 +114,6 @@ sublime_package_control:
 
 # Glob pattern to ansible task files to run after all other tasks are finished.
 post_provision_tasks: []
+
+configure_ssh: true
+configure_dev: true

@@ -1,0 +1,64 @@
+add_newline = true
+
+
+format = """
+$username\
+$hostname\
+$kubernetes\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$hg_branch\
+$docker_context\
+$cmake\
+$golang\
+$helm\
+$java\
+$nodejs\
+$python\
+$rust\
+$scala\
+$terraform\
+$conda\
+$memory_usage\
+$aws\
+$gcloud\
+$openstack\
+$env_var\
+$crystal\
+$custom\
+$cmd_duration\
+$line_break\
+$jobs\
+$battery\
+$time\
+$status\
+$shell\
+$character"""
+
+[username]
+show_always = true
+style_user = "green bold"
+format="[$user]($style)"
+
+[hostname]
+ssh_only = false
+format= "[@](blue bold)[$hostname](cyan bold) "
+
+[directory]
+truncation_length=10
+truncate_to_repo=false
+style="yellow"
+truncation_symbol = "…/"
+
+[scala]
+disabled=true
+
+[git_branch]
+format="[$symbol$branch]($style) "
+style="blue bold"
+
+[java]
+disabled=true

@@ -1,0 +1,42 @@
+- name: Creates directory
+  file:
+    path: "~/.ssh"
+    state: directory
+
+- openssh_keypair:
+    path: "~/.ssh/id_ed25519"
+    type: ed25519
+
+- copy:
+    src: ssh_config
+    dest: "~/.ssh/config"
+
+# GPG config
+
+- file:
+    path: "~/.gnupg"
+    state: directory
+    mode: "0700"
+
+- file:
+    path: "~/.gnupg/gpg.conf"
+    state: touch
+
+- lineinfile:
+    path: "~/.gnupg/gpg.conf"
+    line: "use-agent"
+
+- lineinfile:
+    path: "~/.zshrc"
+    line: "export GPG_TTY=$(tty)"
+
+- community.general.git_config:
+    scope: global
+    name: commit.gpgsign
+    value: "true"
+
+# Manual
+# gpg --full-gen-key
+# gpg -K --keyid-format SHORT
+# gpg --armor --export <id> | pbcopy >>> upload to github
+# git config --global user.signingkey <id>
