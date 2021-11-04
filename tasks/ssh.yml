@@ -26,6 +26,14 @@
     path: "~/.gnupg/gpg.conf"
     line: "use-agent"
 
+- file:
+    path: "~/.gnupg/gpg-agent.conf"
+    state: touch
+
+- lineinfile:
+    path: "~/.gnupg/gpg-agent.conf"
+    line: "pinentry-program /usr/local/bin/pinentry-mac"
+
 - lineinfile:
     path: "~/.zshrc"
     line: "export GPG_TTY=$(tty)"

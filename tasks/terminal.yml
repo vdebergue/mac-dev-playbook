@@ -31,6 +31,16 @@
 
 - community.general.git_config:
     scope: global
+    name: user.name
+    value: "Vincent Debergue"
+
+- community.general.git_config:
+    scope: global
+    name: user.email
+    value: "{{ email }}"
+
+- community.general.git_config:
+    scope: global
     name: alias.co
     value: "checkout"
 
@@ -43,3 +53,20 @@
     scope: global
     name: alias.s
     value: "status -s"
+
+- blockinfile:
+    path: "~/.gitconfig"
+    marker: "# MANAGED BY ANSIBLE git delta"
+    block: |
+      [pager]
+        diff = delta
+        log = delta
+        reflog = delta
+        show = delta
+
+      [interactive]
+        diffFilter = delta --color-only --features=interactive
+
+      [delta]
+        syntax-theme = "Solarized (dark)"
+        line-numbers = true
