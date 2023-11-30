@@ -90,3 +90,6 @@ post_provision_tasks: []
 
 configure_ssh: true
 configure_dev: true
+
+email_pro: ""
+email_perso: ""

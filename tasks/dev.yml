@@ -1,3 +1,7 @@
+- file:
+    path: "~/dev/perso"
+    state: directory
+
 - name: nvm setup
   blockinfile:
     path: "~/.zshrc"
@@ -10,18 +14,3 @@
 - file:
     path: "~/.nvm"
     state: directory
-
-- command: cs java --jvm 11 -version
-  args:
-    creates: "~/Library/Caches/Coursier/arc/https/github.com/AdoptOpenJDK/openjdk11-binaries"
-
-- blockinfile:
-    path: "~/.zshrc"
-    marker: "# MANAGED BY ANSIBLE -- CS"
-    block: |
-      export JAVA_HOME=$(cs java-home --jvm 11)
-      export PATH="$PATH:$HOME/Library/Application Support/Coursier/bin"
-
-- command: cs install sbt
-  args:
-    creates: "~/Library/Application Support/Coursier/bin/sbt"

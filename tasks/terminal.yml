@@ -37,7 +37,7 @@
 - community.general.git_config:
     scope: global
     name: user.email
-    value: "{{ email }}"
+    value: "{{ email_pro }}"
 
 - community.general.git_config:
     scope: global
@@ -53,6 +53,26 @@
     scope: global
     name: alias.s
     value: "status -s"
+
+- community.general.git_config:
+    scope: global
+    name: alias.br
+    value: "branch"
+
+- community.general.git_config:
+    scope: global
+    name: pull.rebase
+    value: "true"
+
+- community.general.git_config:
+    scope: global
+    name: push.autoSetupRemote
+    value: "true"
+
+- community.general.git_config:
+    scope: global
+    name: core.excludesfile
+    value: "/Users/vde/.gitignore"
 
 - blockinfile:
     path: "~/.gitconfig"
@@ -70,3 +90,18 @@
       [delta]
         syntax-theme = "Solarized (dark)"
         line-numbers = true
+
+- blockinline:
+    path: "~/.gitconfig"
+    marker: "# MANAGED BY ANSIBLE git perso"
+    block: |
+      [includeIf "gitdir:~/dev/perso/**"]
+        path = ~/.gitconfig.perso
+
+- blockinline:
+    path: "~/.gitconfig.perso"
+    marker: "# MANAGED BY ANSIBLE git perso"
+    block: |
+      [user]
+        name = Vincent Debergue
+        email = {{ email_perso }}
